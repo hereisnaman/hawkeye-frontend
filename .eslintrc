@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "no-unused-vars": 0,
+    "react/prefer-stateless-function": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "prettier/prettier": "error"
+  }
+}
