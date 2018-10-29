@@ -40,4 +40,4 @@ const mapStateToProps = ({ user }) => ({
   loggedIn: user.loggedIn,
 });
 
-export const HomePage = connect(mapStateToProps)(HomePageComponent);
+export default connect(mapStateToProps)(HomePageComponent);

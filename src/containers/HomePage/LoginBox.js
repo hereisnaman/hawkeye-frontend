@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class LoginBox extends React.Component {
+export default class LoginBox extends React.Component {
   render() {
     const { showSignup } = this.props;
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 
-import { NotFoundPage } from '../pages/';
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 class AuthProviderComponent extends React.Component {
   render() {
@@ -11,7 +11,11 @@ class AuthProviderComponent extends React.Component {
       return children;
     }
 
-    return <NotFoundPage />;
+    return (
+      <Suspense falllback={null}>
+        <NotFoundPage />
+      </Suspense>
+    );
   }
 }
 
@@ -19,4 +23,4 @@ const mapStateToProps = ({ user }) => ({
   loggedIn: user.loggedIn,
 });
 
-export const AuthProvider = connect(mapStateToProps)(AuthProviderComponent);
+export default connect(mapStateToProps)(AuthProviderComponent);
