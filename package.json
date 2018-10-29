@@ -12,9 +12,12 @@
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\""
   },
   "dependencies": {
+    "@firebase/app-types": "0.x",
+    "firebase": "^5.5.6",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
@@ -23,6 +26,8 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "7.x",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
