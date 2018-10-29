@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavBar } from '../components/';
 import { LoginBox, SignupBox } from '../containers/';
 
-class HomePageComponent extends React.Component {
+class HomePage extends React.Component {
   state = {
     isLoginPage: true,
   };
@@ -40,4 +40,4 @@ const mapStateToProps = ({ user }) => ({
   loggedIn: user.loggedIn,
 });
 
-export default connect(mapStateToProps)(HomePageComponent);
+export default connect(mapStateToProps)(HomePage);

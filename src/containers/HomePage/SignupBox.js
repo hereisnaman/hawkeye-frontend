@@ -1,6 +1,62 @@
 import React from 'react';
 
-export default class SignupBox extends React.Component {
+import { validateName, validateEmail, validatePassword } from '../../utils/';
+
+class SignupBox extends React.Component {
+  state = {
+    name: '',
+    nameError: '',
+    email: '',
+    emailError: '',
+    password: '',
+    passwordError: '',
+  };
+
+  validate = (state = this.state) => {
+    const { name, email, password } = state;
+
+    const nameError = validateName(name).error;
+    const emailError = validateEmail(email).error;
+    const passwordError = validatePassword(password).error;
+
+    this.setState({
+      nameError,
+      emailError,
+      passwordError,
+    });
+
+    return !nameError && !emailError && !passwordError;
+  };
+
+  handleNameChange = e => {
+    this.setState({
+      name: e.target.value,
+      nameError: '',
+    });
+  };
+
+  handleEmailChange = e => {
+    this.setState({
+      email: e.target.value,
+      emailError: '',
+    });
+  };
+
+  handlePasswordChange = e => {
+    this.setState({
+      password: e.target.value,
+      passwordError: '',
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if (this.validate()) {
+      // TODO: add firebase integration
+    }
+  };
+
   render() {
     const { showLogin } = this.props;
 
@@ -30,7 +86,7 @@ export default class SignupBox extends React.Component {
             <div className="text-center text-muted mb-4">
               <small>Or sign up with credentials</small>
             </div>
-            <form role="form">
+            <form role="form" onSubmit={this.handleSubmit}>
               <div className="form-group mb-3">
                 <div className="input-group input-group-alternative">
                   <div className="input-group-prepend">
@@ -38,7 +94,7 @@ export default class SignupBox extends React.Component {
                       <i className="ni ni-hat-3" />
                     </span>
                   </div>
-                  <input className="form-control" placeholder="Name" type="text" />
+                  <input className="form-control" placeholder="Name" type="text" onChange={this.handleNameChange} />
                 </div>
               </div>
               <div className="form-group">
@@ -48,7 +104,7 @@ export default class SignupBox extends React.Component {
                       <i className="ni ni-email-83" />
                     </span>
                   </div>
-                  <input className="form-control" placeholder="Email" type="email" />
+                  <input className="form-control" placeholder="Email" type="email" onChange={this.handleEmailChange} />
                 </div>
               </div>
               <div className="form-group">
@@ -58,11 +114,16 @@ export default class SignupBox extends React.Component {
                       <i className="ni ni-lock-circle-open" />
                     </span>
                   </div>
-                  <input className="form-control" placeholder="Password" type="password" />
+                  <input
+                    className="form-control"
+                    placeholder="Password"
+                    type="password"
+                    onChange={this.handlePasswordChange}
+                  />
                 </div>
               </div>
               <div className="text-center">
-                <button type="button" className="btn btn-primary my-4">
+                <button type="submit" className="btn btn-primary my-4">
                   Create account
                 </button>
               </div>
@@ -78,3 +139,5 @@ export default class SignupBox extends React.Component {
     );
   }
 }
+
+export default SignupBox;

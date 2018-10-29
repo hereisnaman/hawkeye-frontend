@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
-class AuthProviderComponent extends React.Component {
+class AuthProvider extends React.Component {
   render() {
     const { loggedIn, children } = this.props;
 
@@ -23,4 +23,4 @@ const mapStateToProps = ({ user }) => ({
   loggedIn: user.loggedIn,
 });
 
-export default connect(mapStateToProps)(AuthProviderComponent);
+export default connect(mapStateToProps)(AuthProvider);
