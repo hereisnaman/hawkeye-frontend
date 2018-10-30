@@ -1,26 +1,36 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
+import auth from '../auth';
+import * as actions from '../actions/';
 
 class AuthProvider extends React.Component {
-  render() {
-    const { loggedIn, children } = this.props;
+  componentDidMount() {
+    const { updateAuthState } = this.props;
 
-    if (loggedIn) {
+    auth.onAuthStateChanged(updateAuthState);
+  }
+
+  render() {
+    const { loading, children } = this.props;
+
+    if (!loading) {
       return children;
     }
 
-    return (
-      <Suspense falllback={null}>
-        <NotFoundPage />
-      </Suspense>
-    );
+    return null;
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  loggedIn: user.loggedIn,
+const mapStateToProps = ({ auth }) => ({
+  loading: auth.loading,
 });
 
-export default connect(mapStateToProps)(AuthProvider);
+const mapDispatchToProps = dispatch => ({
+  updateAuthState: actions.updateAuthState(dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AuthProvider);

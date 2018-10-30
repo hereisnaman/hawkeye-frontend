@@ -7,15 +7,15 @@ export const NavBar = props => (
       <Link className="navbar-brand" to="/">
         Kanban Board
       </Link>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
           <a
-            class="nav-link nav-link-icon"
+            className="nav-link nav-link-icon"
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/hereisnaman/">
-            <i class="fab fa-github" />
-            <span class="nav-link-inner--text">Github</span>
+            <i className="fab fa-github" />
+            <span className="nav-link-inner--text">Github</span>
           </a>
         </li>
       </ul>

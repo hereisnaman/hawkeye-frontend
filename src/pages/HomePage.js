@@ -12,7 +12,6 @@ class HomePage extends React.Component {
   handlePageChange = isLoginPage => this.setState({ isLoginPage });
 
   render() {
-    const { loggedIn } = this.props;
     const { isLoginPage } = this.state;
 
     return (
@@ -36,8 +35,4 @@ class HomePage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  loggedIn: user.loggedIn,
-});
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

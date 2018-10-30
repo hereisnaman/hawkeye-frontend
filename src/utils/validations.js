@@ -3,7 +3,7 @@ export const validateName = name => {
 
   return {
     valid,
-    error: !!name.trim() ? (valid ? undefined : 'Invalid name.') : 'Required.',
+    error: !!name.trim() ? (valid ? undefined : 'Name is invalid.') : 'Required.',
   };
 };
 
@@ -12,7 +12,7 @@ export const validateEmail = email => {
 
   return {
     valid,
-    error: !!email.trim() ? (valid ? undefined : 'Invalid email.') : 'Required.',
+    error: !!email.trim() ? (valid ? undefined : 'Email is Invalid.') : 'Required.',
   };
 };
 
