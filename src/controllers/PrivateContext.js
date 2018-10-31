@@ -20,7 +20,7 @@ class PrivateContext extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => ({
-  signedIn: auth.user,
+  signedIn: !!auth.user,
 });
 
 export default connect(mapStateToProps)(PrivateContext);

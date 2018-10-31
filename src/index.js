@@ -4,11 +4,12 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { getStore } from './store';
-import { AuthProvider } from './controllers/';
+import { AuthProvider, EntryController } from './controllers/';
 import './styles/main.scss';
 
 const PrivateContext = lazy(() => import('./controllers/PrivateContext'));
 const HomePage = lazy(() => import('./pages/HomePage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const store = getStore();
 
@@ -24,11 +25,11 @@ class App extends React.Component {
                   path="/"
                   exact
                   render={() => (
-                    <React.Fragment>
+                    <EntryController redirectUrl={'/dashboard/'}>
                       <Suspense fallback={null}>
                         <HomePage />
                       </Suspense>
-                    </React.Fragment>
+                    </EntryController>
                   )}
                 />
                 <Route
@@ -36,9 +37,16 @@ class App extends React.Component {
                   render={() => (
                     <Suspense fallback={null}>
                       <PrivateContext>
+                        This needs authentication
                         <Switch>
-                          This needs authenticated
-                          <Route path="*" exact component={NotFoundPage} />
+                          <Route
+                            path="*"
+                            render={() => (
+                              <Suspense falllback={null}>
+                                <NotFoundPage />
+                              </Suspense>
+                            )}
+                          />
                         </Switch>
                       </PrivateContext>
                     </Suspense>

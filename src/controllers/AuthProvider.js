@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import auth from '../auth';
 import * as actions from '../actions/';
@@ -30,7 +31,9 @@ const mapDispatchToProps = dispatch => ({
   updateAuthState: actions.updateAuthState(dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AuthProvider);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(AuthProvider),
+);

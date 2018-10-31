@@ -57,11 +57,9 @@ class SignupBox extends React.Component {
 
     if (this.validate()) {
       try {
-        const response = await auth.createUserWithEmailAndPassword(email, password);
         await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
-        console.log(response);
+        const response = await auth.createUserWithEmailAndPassword(email, password);
       } catch (err) {
-        console.log(err);
         switch (err.code) {
           case 'auth/email-already-in-use':
             return this.setState({

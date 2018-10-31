@@ -11,7 +11,7 @@ const signout = payload => ({
   payload,
 });
 
-export const updateAuthState = dispatch => async user => {
+export const updateAuthState = dispatch => user => {
   if (user) {
     return dispatch(signin(user));
   }
