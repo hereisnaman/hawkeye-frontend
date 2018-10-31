@@ -9,6 +9,7 @@ import './styles/main.scss';
 
 const PrivateContext = lazy(() => import('./controllers/PrivateContext'));
 const HomePage = lazy(() => import('./pages/HomePage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const store = getStore();
@@ -33,22 +34,23 @@ class App extends React.Component {
                   )}
                 />
                 <Route
-                  path="*"
+                  exact
+                  path="/dashboard/"
                   render={() => (
                     <Suspense fallback={null}>
                       <PrivateContext>
-                        This needs authentication
-                        <Switch>
-                          <Route
-                            path="*"
-                            render={() => (
-                              <Suspense falllback={null}>
-                                <NotFoundPage />
-                              </Suspense>
-                            )}
-                          />
-                        </Switch>
+                        <Suspense falllback={null}>
+                          <DashboardPage />
+                        </Suspense>
                       </PrivateContext>
+                    </Suspense>
+                  )}
+                />
+                <Route
+                  path="*"
+                  render={() => (
+                    <Suspense falllback={null}>
+                      <NotFoundPage />
                     </Suspense>
                   )}
                 />

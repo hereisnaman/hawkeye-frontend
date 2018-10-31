@@ -2,40 +2,28 @@ import React from 'react';
 import classNames from 'classnames';
 
 import auth from '../../auth';
-import { validateName, validateEmail, validatePassword } from '../../utils/';
+import { validateEmail } from '../../utils/';
 
-class SignUpBox extends React.Component {
+class SignInBox extends React.Component {
   state = {
-    name: '',
-    nameError: '',
     email: '',
     emailError: '',
     password: '',
     passwordError: '',
-    signUpError: '',
+    rememberMe: false,
+    signInError: '',
   };
 
   validate = (state = this.state) => {
-    const { name, email, password } = state;
+    const { email, password } = state;
 
-    const nameError = validateName(name).error;
     const emailError = validateEmail(email).error;
-    const passwordError = validatePassword(password).error;
 
     this.setState({
-      nameError,
       emailError,
-      passwordError,
     });
 
-    return !nameError && !emailError && !passwordError;
-  };
-
-  handleNameChange = e => {
-    this.setState({
-      name: e.target.value,
-      nameError: '',
-    });
+    return !emailError;
   };
 
   handleEmailChange = e => {
@@ -52,33 +40,42 @@ class SignUpBox extends React.Component {
     });
   };
 
+  handleRememberMeChange = e => {
+    this.setState({
+      rememberMe: e.target.checked,
+    });
+  };
+
   handleSubmit = async e => {
     e.preventDefault();
-
-    const { email, password } = this.state;
+    const { email, password, rememberMe } = this.state;
 
     if (this.validate()) {
       try {
-        await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
+        await auth.setPersistence(auth.instance.Auth.Persistence[rememberMe ? 'LOCAL' : 'SESSION']);
 
-        await auth.createUserWithEmailAndPassword(email, password);
+        await auth.signInWithEmailAndPassword(email, password);
       } catch (err) {
         switch (err.code) {
-          case 'auth/email-already-in-use':
-            return this.setState({
-              emailError: 'Email already in use.',
-            });
           case 'auth/invalid-email':
             return this.setState({
               emailError: 'Email is invalid.',
             });
-          case 'auth/weak-password':
+          case 'auth/user-disabled':
             return this.setState({
-              passwordError: 'Password is too weak.',
+              signInError: 'Account is not active',
+            });
+          case 'auth/user-not-found':
+            return this.setState({
+              signInError: 'Wrong email/password.',
+            });
+          case 'auth/wrong-password':
+            return this.setState({
+              signInError: 'Wrong email/password.',
             });
           default:
             return this.setState({
-              signUpError: 'There was some error.',
+              signInError: 'There was some error.',
             });
         }
       }
@@ -86,15 +83,15 @@ class SignUpBox extends React.Component {
   };
 
   render() {
-    const { showSignIn } = this.props;
-    const { name, email, password, nameError, emailError, passwordError, signUpError } = this.state;
+    const { showSignUp } = this.props;
+    const { email, emailError, password, passwordError, rememberMe, signInError } = this.state;
 
     return (
       <div className="col-lg-5 col-md-7">
         <div className="card bg-secondary shadow border-0">
           <div className="card-header bg-white pb-5">
             <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign up with</small>
+              <small>Sign in with</small>
             </div>
             <div className="btn-wrapper text-center">
               <a href="#" className="btn btn-neutral btn-icon">
@@ -113,26 +110,9 @@ class SignUpBox extends React.Component {
           </div>
           <div className="card-body px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign up with credentials</small>
+              <small>Or sign in with credentials</small>
             </div>
             <form role="form" onSubmit={this.handleSubmit}>
-              <div className={classNames('form-group', 'mb-3', !!nameError ? 'has-danger' : '')}>
-                <div className="input-group input-group-alternative">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <i className="ni ni-hat-3" />
-                    </span>
-                  </div>
-                  <input
-                    className={classNames('form-control', !!nameError ? 'is-invalid' : '')}
-                    placeholder="Name"
-                    type="text"
-                    value={name}
-                    onChange={this.handleNameChange}
-                  />
-                </div>
-                {!!nameError ? <p className="text-warning text-left small mb-0">{nameError}</p> : null}
-              </div>
               <div className={classNames('form-group', 'mb-3', !!emailError ? 'has-danger' : '')}>
                 <div className="input-group input-group-alternative">
                   <div className="input-group-prepend">
@@ -166,19 +146,31 @@ class SignUpBox extends React.Component {
                   />
                 </div>
                 {!!passwordError ? <p className="text-warning text-left small mb-0">{passwordError}</p> : null}
+                {!!signInError ? <p className="text-warning text-left small mt-3 mb-0">{signInError}</p> : null}
               </div>
-              {!!signUpError ? <p className="text-warning text-left small mb-0">{signUpError}</p> : null}
+              <div className="custom-control custom-control-alternative custom-checkbox text-left">
+                <input
+                  className="custom-control-input"
+                  id="remember-me"
+                  type="checkbox"
+                  value={rememberMe}
+                  onChange={this.handleRememberMeChange}
+                />
+                <label className="custom-control-label" htmlFor="remember-me">
+                  <span className="text-muted">Remember me</span>
+                </label>
+              </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-primary my-4">
-                  Create account
+                  Sign in
                 </button>
               </div>
             </form>
           </div>
         </div>
         <div className="row mt-3">
-          <div className="col-6 pointer text-left">
-            <small onClick={showSignIn}>Already have an account?</small>
+          <div className="offset-6 col-6 pointer text-right">
+            <small onClick={showSignUp}>Create a new account</small>
           </div>
         </div>
       </div>
@@ -186,4 +178,4 @@ class SignUpBox extends React.Component {
   }
 }
 
-export default SignUpBox;
+export default SignInBox;

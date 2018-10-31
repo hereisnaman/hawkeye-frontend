@@ -8,14 +8,14 @@ const initialState = {
 
 export const authReducer = (state = initialState, { type, payload = {} }) => {
   switch (type) {
-    case actionTypes.SIGNIN_USER:
+    case actionTypes.SIGN_IN_USER:
       return {
         ...state,
         loading: false,
         authenticated: true,
         user: payload,
       };
-    case actionTypes.SIGNOUT_USER:
+    case actionTypes.SIGN_OUT_USER:
       return {
         ...state,
         loading: false,

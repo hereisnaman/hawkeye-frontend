@@ -1,30 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { NavBar } from '../components/';
-import { LoginBox, SignupBox } from '../containers/';
+import { HomeNavBar, SignInBox, SignUpBox } from '../containers/';
 
 class HomePage extends React.Component {
   state = {
-    isLoginPage: true,
+    isSignInPage: true,
   };
 
-  handlePageChange = isLoginPage => this.setState({ isLoginPage });
+  handlePageChange = isSignInPage => this.setState({ isSignInPage });
 
   render() {
-    const { isLoginPage } = this.state;
+    const { isSignInPage } = this.state;
 
     return (
       <React.Fragment>
-        <NavBar />
+        <HomeNavBar />
         <div className="bg-gradient-primary py-7 py-lg-8">
           <div className="container">
             <div className="text-center">
               <div className="row justify-content-center">
-                {isLoginPage ? (
-                  <LoginBox showSignup={() => this.handlePageChange(false)} />
+                {isSignInPage ? (
+                  <SignInBox showSignUp={() => this.handlePageChange(false)} />
                 ) : (
-                  <SignupBox showLogin={() => this.handlePageChange(true)} />
+                  <SignUpBox showSignIn={() => this.handlePageChange(true)} />
                 )}
               </div>
             </div>

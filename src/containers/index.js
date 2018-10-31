@@ -1,2 +1,4 @@
-export { default as LoginBox } from './HomePage/LoginBox';
-export { default as SignupBox } from './HomePage/SignupBox';
+export { default as HomeNavBar } from './HomePage/HomeNavBar';
+export { default as SignInBox } from './HomePage/SignInBox';
+export { default as SignUpBox } from './HomePage/SignUpBox';
+export { default as DashboardNavBar } from './Dashboard/DashboardNavBar';

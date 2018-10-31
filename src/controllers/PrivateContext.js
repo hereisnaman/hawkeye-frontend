@@ -5,9 +5,9 @@ const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 class PrivateContext extends React.Component {
   render() {
-    const { signedIn, children } = this.props;
+    const { authenticated, children } = this.props;
 
-    if (signedIn) {
+    if (authenticated) {
       return children;
     }
 
@@ -20,7 +20,7 @@ class PrivateContext extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => ({
-  signedIn: !!auth.user,
+  authenticated: auth.authenticated,
 });
 
 export default connect(mapStateToProps)(PrivateContext);

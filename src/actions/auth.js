@@ -1,20 +1,20 @@
 import { actionTypes } from '../constants/';
 import auth from '../auth';
 
-const signin = payload => ({
-  type: actionTypes.SIGNIN_USER,
+const signIn = payload => ({
+  type: actionTypes.SIGN_IN_USER,
   payload,
 });
 
-const signout = payload => ({
-  type: actionTypes.SIGNOUT_USER,
+const signOut = payload => ({
+  type: actionTypes.SIGN_OUT_USER,
   payload,
 });
 
 export const updateAuthState = dispatch => user => {
   if (user) {
-    return dispatch(signin(user));
+    return dispatch(signIn(user));
   }
 
-  return dispatch(signout());
+  return dispatch(signOut());
 };
