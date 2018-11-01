@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import auth from '../../auth';
 import { validateName, validateEmail, validatePassword } from '../../utils/';
 
-class SignUpBox extends React.Component {
+class SignUpBox extends React.PureComponent {
   state = {
     name: '',
     nameError: '',

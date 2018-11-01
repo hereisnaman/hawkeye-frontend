@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import auth from '../../auth';
 import { validateEmail } from '../../utils/';
 
-class SignInBox extends React.Component {
+class SignInBox extends React.PureComponent {
   state = {
     email: '',
     emailError: '',
