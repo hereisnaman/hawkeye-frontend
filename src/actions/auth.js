@@ -1,5 +1,6 @@
-import { actionTypes } from '../constants/';
 import auth from '../auth';
+import { request } from '../utils/';
+import { actionTypes, urls } from '../constants/';
 
 const signIn = payload => ({
   type: actionTypes.SIGN_IN_USER,
@@ -11,10 +12,23 @@ const signOut = payload => ({
   payload,
 });
 
-export const updateAuthState = dispatch => user => {
-  if (user) {
-    return dispatch(signIn(user));
+export const updateAuthState = dispatch => async meta => {
+  if (meta) {
+    const token = await auth.currentUser.getIdToken(true);
+
+    window.localStorage.setItem('token', token);
+    try {
+      const user = await request('GET', urls.me);
+
+      return dispatch(signIn({ meta, user }));
+    } catch (err) {
+      window.localStorage.removeItem('token');
+
+      return auth.signOut();
+    }
   }
+
+  window.localStorage.removeItem('token');
 
   return dispatch(signOut());
 };
