@@ -12,7 +12,7 @@ const HomeNavBar = props => (
         className="nav-link nav-link-icon"
         target="_blank"
         rel="noopener noreferrer"
-        href="https://github.com/hereisnaman/">
+        href="https://github.com/hereisnaman/kanban-board/">
         <i className="fab fa-github" />
         <span className="nav-link-inner--text">Github</span>
       </a>,

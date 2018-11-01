@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NavBar = React.memo(({ title, link, items }) => (
+const NavBar = ({ title, link, items }) => (
   <nav className="navbar navbar-top navbar-horizontal navbar-expand-lg navbar-dark">
     <div className="container">
-      <Link className="navbar-brand" to={link}>
+      <Link className="navbar-brand text-white" to={link}>
         {title}
       </Link>
       <ul className="navbar-nav ml-auto">
@@ -16,6 +16,6 @@ const NavBar = React.memo(({ title, link, items }) => (
       </ul>
     </div>
   </nav>
-));
+);
 
 export default NavBar;
