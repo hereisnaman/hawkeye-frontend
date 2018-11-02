@@ -107,6 +107,37 @@ class SignInBox extends React.PureComponent {
     }
   };
 
+  handleSignInWithGithub = async () => {
+    const { signInWithGithub } = this.props;
+
+    this.setState({
+      signInError: '',
+      socialSignInError: '',
+      signingInWith: 'GITHUB',
+    });
+
+    try {
+      await signInWithGithub();
+
+      await this.setState({
+        signingInWith: null,
+      });
+    } catch (err) {
+      switch (err.code) {
+        case 'auth/account-exists-with-different-credential':
+          return this.setState({
+            socialSignInError: 'An account already exists with same email address.',
+            signingInWith: null,
+          });
+        default:
+          return this.setState({
+            socialSignInError: 'There was some error.',
+            signingInWith: null,
+          });
+      }
+    }
+  };
+
   handleSignInWithGoogle = async () => {
     const { signInWithGoogle } = this.props;
 
@@ -123,10 +154,18 @@ class SignInBox extends React.PureComponent {
         signingInWith: null,
       });
     } catch (err) {
-      return this.setState({
-        socialSignInError: 'There was some error.',
-        signingInWith: null,
-      });
+      switch (err.code) {
+        case 'auth/account-exists-with-different-credential':
+          return this.setState({
+            socialSignInError: 'An account already exists with same email address.',
+            signingInWith: null,
+          });
+        default:
+          return this.setState({
+            socialSignInError: 'There was some error.',
+            signingInWith: null,
+          });
+      }
     }
   };
 
@@ -151,7 +190,7 @@ class SignInBox extends React.PureComponent {
               <small>Sign in with</small>
             </div>
             <div className="btn-wrapper text-center">
-              <button className="btn btn-neutral btn-icon" disabled={signingIn}>
+              <button className="btn btn-neutral btn-icon" disabled={signingIn} onClick={this.handleSignInWithGithub}>
                 <span className="btn-inner--icon">
                   <img src="/public/assets/img/github.svg" />
                 </span>
@@ -242,6 +281,7 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = dispatch => ({
   signIn: actions.signIn(dispatch),
+  signInWithGithub: actions.signInWithGithub(dispatch),
   signInWithGoogle: actions.signInWithGoogle(dispatch),
 });
 

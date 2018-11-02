@@ -99,3 +99,26 @@ export const signInWithGoogle = dispatch => async () => {
     throw err;
   }
 };
+
+export const signInWithGithub = dispatch => async () => {
+  await dispatch(signingInAction());
+
+  try {
+    await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
+    const provider = new auth.instance.GithubAuthProvider();
+    const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
+    if (additionalUserInfo.isNewUser) {
+      const { email, name, picture: avatar } = additionalUserInfo.profile;
+      const { uid } = user;
+
+      await request('POST', urls.signUp, { uid, email, name, avatar });
+    }
+
+    await updateAuthState(dispatch)(user);
+    await dispatch(signingInAction(false));
+  } catch (err) {
+    await dispatch(signingInAction(false));
+
+    throw err;
+  }
+};
