@@ -33,15 +33,17 @@ class DashboardNavBar extends React.Component {
         title="Dashboard"
         link="/dashboard/"
         items={[
-          <span key="signout-button" className="nav-link nav-link-icon pointer">
-            <div className="media align-items-center mb-0 pb-0" onClick={this.toggleUserDropdown}>
-              <span className="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src={avatar || '/public/assets/img/smiley.png'} />
-              </span>
-              <div className="media-body ml-2 d-none d-lg-block">
-                <span className="mb-0 text-sm  font-weight-bold">{name}</span>
+          <div key="user-dropdown">
+            <span className="nav-link pointer">
+              <div className="media align-items-center mb-0 pb-0" onClick={this.toggleUserDropdown}>
+                <span className="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src={avatar || '/public/assets/img/smiley.png'} />
+                </span>
+                <div className="media-body ml-2 d-none d-lg-block">
+                  <span className="mb-0 text-sm  font-weight-bold">{name}</span>
+                </div>
               </div>
-            </div>
+            </span>
             <div
               className={classNames('dropdown-menu', 'dropdown-menu-arrow', 'dropdown-menu-right', {
                 show: showUserDropdown,
@@ -55,7 +57,7 @@ class DashboardNavBar extends React.Component {
                 <span>Logout</span>
               </span>
             </div>
-          </span>,
+          </div>,
         ]}
       />
     );
