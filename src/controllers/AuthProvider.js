@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import auth from '../auth';
 import * as actions from '../actions/';
+import { LoadingPage } from '../containers/';
 
 class AuthProvider extends React.Component {
   handleAuthStateUpdate = meta => {
@@ -25,7 +26,7 @@ class AuthProvider extends React.Component {
       return children;
     }
 
-    return null;
+    return <LoadingPage />;
   }
 }
 

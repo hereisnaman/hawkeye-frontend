@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { getStore } from './store';
+import { LoadingPage } from './containers/';
 import { AuthProvider, EntryController } from './controllers/';
 import './styles/main.scss';
 
@@ -27,7 +28,7 @@ class App extends React.Component {
                   exact
                   render={() => (
                     <EntryController redirectUrl={'/dashboard/'}>
-                      <Suspense fallback={null}>
+                      <Suspense fallback={<LoadingPage />}>
                         <HomePage />
                       </Suspense>
                     </EntryController>
@@ -37,9 +38,9 @@ class App extends React.Component {
                   exact
                   path="/dashboard/"
                   render={() => (
-                    <Suspense fallback={null}>
+                    <Suspense fallback={<LoadingPage />}>
                       <PrivateContext>
-                        <Suspense falllback={null}>
+                        <Suspense falllback={LoadingPage}>
                           <DashboardPage />
                         </Suspense>
                       </PrivateContext>
@@ -49,7 +50,7 @@ class App extends React.Component {
                 <Route
                   path="*"
                   render={() => (
-                    <Suspense falllback={null}>
+                    <Suspense falllback={<LoadingPage />}>
                       <NotFoundPage />
                     </Suspense>
                   )}

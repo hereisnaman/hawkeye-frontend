@@ -1,6 +1,6 @@
 .spinner {
-  width: 66px;
-  height: 66px;
+  width: 50px;
+  height: 50px;
   -webkit-animation: contanim 2s linear infinite;
   animation: contanim 2s linear infinite;
 
@@ -37,7 +37,7 @@
     }
 
     &:nth-child(3) circle {
-      stroke: #f5365c;
+      stroke: #5e72e4;
       stroke-dasharray: 1, 300;
       stroke-dashoffset: 0;
       -webkit-animation: strokeanim 3s calc(0.2s * (3)) ease infinite;

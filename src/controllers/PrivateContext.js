@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 
+import { LoadingPage } from '../containers/';
+
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 class PrivateContext extends React.Component {
@@ -12,7 +14,7 @@ class PrivateContext extends React.Component {
     }
 
     return (
-      <Suspense falllback={null}>
+      <Suspense falllback={<LoadingPage />}>
         <NotFoundPage />
       </Suspense>
     );

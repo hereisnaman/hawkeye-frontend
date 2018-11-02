@@ -1,0 +1,7 @@
+.loading-page {
+  .row {
+    height: 50vh;
+    top: calc(100% - 50px);
+    transform: translateY(calc(100% - 50px));
+  }
+}
