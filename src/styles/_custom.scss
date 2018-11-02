@@ -11,3 +11,15 @@
 .minh-100 {
   min-height: 100vh;
 }
+
+.not-visible {
+  visibility: hidden;
+}
+
+.btn:disabled {
+  opacity: 1;
+  &:hover {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}

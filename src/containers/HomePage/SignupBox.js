@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import auth from '../../auth';
 import * as actions from '../../actions/';
+import { Spinner } from '../../components/';
 import { validateName, validateEmail, validatePassword } from '../../utils/';
 
 class SignUpBox extends React.PureComponent {
@@ -14,8 +15,9 @@ class SignUpBox extends React.PureComponent {
     emailError: '',
     password: '',
     passwordError: '',
-    signinerror: '',
-    socialsigninerror: '',
+    signInError: '',
+    socialSignInError: '',
+    signingInWith: null,
   };
 
   validate = (state = this.state) => {
@@ -29,8 +31,8 @@ class SignUpBox extends React.PureComponent {
       nameError,
       emailError,
       passwordError,
-      signinerror: '',
-      socialsigninerror: '',
+      signInError: '',
+      socialSignInError: '',
     });
 
     return !nameError && !emailError && !passwordError;
@@ -48,8 +50,8 @@ class SignUpBox extends React.PureComponent {
     this.setState({
       email: e.target.value,
       emailError: '',
-      signinerror: '',
-      socialsigninerror: '',
+      signInError: '',
+      socialSignInError: '',
     });
   };
 
@@ -57,8 +59,8 @@ class SignUpBox extends React.PureComponent {
     this.setState({
       password: e.target.value,
       passwordError: '',
-      signinerror: '',
-      socialsigninerror: '',
+      signInError: '',
+      socialSignInError: '',
     });
   };
 
@@ -191,16 +193,26 @@ class SignUpBox extends React.PureComponent {
             </div>
             <div className="btn-wrapper text-center">
               <button className="btn btn-neutral btn-icon" disabled={signingIn} onClick={this.handleSignInWithGithub}>
-                <span className="btn-inner--icon">
+                <span
+                  className={classNames('btn-inner--icon', { 'not-visible': signingIn && signingInWith === 'GITHUB' })}>
                   <img src="/public/assets/img/github.svg" />
                 </span>
-                <span className="btn-inner--text">{signingIn && signingInWith === 'GITHUB' ? 'loader' : 'Github'}</span>
+                <span
+                  className={classNames('btn-inner--text', { 'not-visible': signingIn && signingInWith === 'GITHUB' })}>
+                  Github
+                </span>
+                {signingIn && signingInWith === 'GITHUB' && <Spinner />}
               </button>
               <button className="btn btn-neutral btn-icon" disabled={signingIn} onClick={this.handleSignInWithGoogle}>
-                <span className="btn-inner--icon">
+                <span
+                  className={classNames('btn-inner--icon', { 'not-visible': signingIn && signingInWith === 'GOOGLE' })}>
                   <img src="/public/assets/img/google.svg" />
                 </span>
-                <span className="btn-inner--text">{signingIn && signingInWith === 'GOOGLE' ? 'loader' : 'Google'}</span>
+                <span
+                  className={classNames('btn-inner--text', { 'not-visible': signingIn && signingInWith === 'GOOGLE' })}>
+                  Google
+                </span>
+                {signingIn && signingInWith === 'GOOGLE' && <Spinner />}
               </button>
             </div>
             {!!socialSignInError && <p className="text-warning text-center small mt-3 mb-0">{socialSignInError}</p>}
@@ -264,7 +276,13 @@ class SignUpBox extends React.PureComponent {
               {!!signUpError && <p className="text-warning text-left small mb-0">{signUpError}</p>}
               <div className="text-center">
                 <button type="submit" className="btn btn-primary my-4" disabled={signingIn}>
-                  {signingIn && signingInWith === 'EMAIL' ? 'loading' : 'Create account'}
+                  <span
+                    className={classNames({
+                      'not-visible': signingIn && signingInWith === 'EMAIL',
+                    })}>
+                    Create account
+                  </span>
+                  {signingIn && signingInWith === 'EMAIL' && <Spinner />}
                 </button>
               </div>
             </form>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import auth from '../../auth';
 import * as actions from '../../actions/';
+import { Spinner } from '../../components/';
 import { validateEmail } from '../../utils/';
 
 class SignInBox extends React.PureComponent {
@@ -191,16 +192,26 @@ class SignInBox extends React.PureComponent {
             </div>
             <div className="btn-wrapper text-center">
               <button className="btn btn-neutral btn-icon" disabled={signingIn} onClick={this.handleSignInWithGithub}>
-                <span className="btn-inner--icon">
+                <span
+                  className={classNames('btn-inner--icon', { 'not-visible': signingIn && signingInWith === 'GITHUB' })}>
                   <img src="/public/assets/img/github.svg" />
                 </span>
-                <span className="btn-inner--text">{signingIn && signingInWith === 'GITHUB' ? 'loader' : 'Github'}</span>
+                <span
+                  className={classNames('btn-inner--text', { 'not-visible': signingIn && signingInWith === 'GITHUB' })}>
+                  Github
+                </span>
+                {signingIn && signingInWith === 'GITHUB' && <Spinner />}
               </button>
               <button className="btn btn-neutral btn-icon" disabled={signingIn} onClick={this.handleSignInWithGoogle}>
-                <span className="btn-inner--icon">
+                <span
+                  className={classNames('btn-inner--icon', { 'not-visible': signingIn && signingInWith === 'GOOGLE' })}>
                   <img src="/public/assets/img/google.svg" />
                 </span>
-                <span className="btn-inner--text">{signingIn && signingInWith === 'GOOGLE' ? 'loader' : 'Google'}</span>
+                <span
+                  className={classNames('btn-inner--text', { 'not-visible': signingIn && signingInWith === 'GOOGLE' })}>
+                  Google
+                </span>
+                {signingIn && signingInWith === 'GOOGLE' && <Spinner />}
               </button>
             </div>
             {!!socialSignInError && <p className="text-warning text-center small mt-3 mb-0">{socialSignInError}</p>}
@@ -259,7 +270,13 @@ class SignInBox extends React.PureComponent {
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-primary my-4" disabled={signingIn}>
-                  {signingIn && signingInWith === 'EMAIL' ? 'loading' : 'Sign in'}
+                  <span
+                    className={classNames({
+                      'not-visible': signingIn && signingInWith === 'EMAIL',
+                    })}>
+                    Sign in
+                  </span>
+                  {signingIn && signingInWith === 'EMAIL' && <Spinner />}
                 </button>
               </div>
             </form>
