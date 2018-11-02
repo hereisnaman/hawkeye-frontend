@@ -1,7 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import auth from '../../auth';
+import * as actions from '../../actions/';
 import { validateEmail } from '../../utils/';
 
 class SignInBox extends React.PureComponent {
@@ -48,14 +50,15 @@ class SignInBox extends React.PureComponent {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    const { signIn } = this.props;
     const { email, password, rememberMe } = this.state;
 
     if (this.validate()) {
       try {
-        await auth.setPersistence(auth.instance.Auth.Persistence[rememberMe ? 'LOCAL' : 'SESSION']);
-
-        await auth.signInWithEmailAndPassword(email, password);
+        await signIn(email, password, rememberMe);
       } catch (err) {
+        console.log(err);
         switch (err.code) {
           case 'auth/invalid-email':
             return this.setState({
@@ -178,4 +181,11 @@ class SignInBox extends React.PureComponent {
   }
 }
 
-export default SignInBox;
+const mapDispatchToProps = dispatch => ({
+  signIn: actions.signIn(dispatch),
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps,
+)(SignInBox);

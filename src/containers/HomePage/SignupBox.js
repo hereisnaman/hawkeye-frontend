@@ -1,7 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import auth from '../../auth';
+import * as actions from '../../actions/';
 import { validateName, validateEmail, validatePassword } from '../../utils/';
 
 class SignUpBox extends React.PureComponent {
@@ -55,13 +57,12 @@ class SignUpBox extends React.PureComponent {
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { email, password } = this.state;
+    const { signUp } = this.props;
+    const { name, email, password } = this.state;
 
     if (this.validate()) {
       try {
-        await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
-
-        await auth.createUserWithEmailAndPassword(email, password);
+        await signUp(name, email, password);
       } catch (err) {
         switch (err.code) {
           case 'auth/email-already-in-use':
@@ -186,4 +187,11 @@ class SignUpBox extends React.PureComponent {
   }
 }
 
-export default SignUpBox;
+const mapDispatchToProps = dispatch => ({
+  signUp: actions.signUp(dispatch),
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps,
+)(SignUpBox);

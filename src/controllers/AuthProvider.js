@@ -6,10 +6,16 @@ import auth from '../auth';
 import * as actions from '../actions/';
 
 class AuthProvider extends React.Component {
-  componentDidMount() {
-    const { updateAuthState } = this.props;
+  handleAuthStateUpdate = meta => {
+    const { signingIn, updateAuthState } = this.props;
 
-    auth.onAuthStateChanged(updateAuthState);
+    if (!signingIn) {
+      return updateAuthState(meta);
+    }
+  };
+
+  componentDidMount() {
+    auth.onAuthStateChanged(this.handleAuthStateUpdate);
   }
 
   render() {
@@ -25,6 +31,7 @@ class AuthProvider extends React.Component {
 
 const mapStateToProps = ({ auth }) => ({
   loading: auth.loading,
+  signingIn: auth.signingIn,
 });
 
 const mapDispatchToProps = dispatch => ({
