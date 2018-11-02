@@ -46,8 +46,8 @@ export const signIn = dispatch => async (email, password, rememberMe) => {
   await auth.setPersistence(auth.instance.Auth.Persistence[rememberMe ? 'LOCAL' : 'SESSION']);
   const { user } = await auth.signInWithEmailAndPassword(email, password);
 
+  await updateAuthState(dispatch)(user);
   await dispatch(signingInAction(false));
-  await updateAuthState(user);
 };
 
 export const signUp = dispatch => async (name, email, password) => {
@@ -61,6 +61,6 @@ export const signUp = dispatch => async (name, email, password) => {
     await request('POST', urls.signUp, { uid, email, name });
   }
 
+  await updateAuthState(dispatch)(data.user);
   await dispatch(signingInAction(false));
-  await updateAuthState(data.user);
 };

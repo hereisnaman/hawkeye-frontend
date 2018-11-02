@@ -9,7 +9,7 @@ const NavBar = ({ title, link, items }) => (
       </Link>
       <ul className="navbar-nav ml-auto">
         {(items || []).map((item, index) => (
-          <li key={`nav-item-${index}`} className="nav-item">
+          <li key={`nav-item-${index}`} className="nav-item dropdown">
             {item}
           </li>
         ))}
