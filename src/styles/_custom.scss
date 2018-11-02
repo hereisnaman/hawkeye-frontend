@@ -1,8 +1,10 @@
 .pointer {
   cursor: pointer;
-  color: #fff;
-  &:hover {
-    color: #ced4da;
+  &.nav-link {
+    color: #fff;
+    &:hover {
+      color: #ced4da;
+    }
   }
 }
 

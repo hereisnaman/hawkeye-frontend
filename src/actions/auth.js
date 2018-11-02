@@ -43,24 +43,59 @@ export const updateAuthState = dispatch => async meta => {
 export const signIn = dispatch => async (email, password, rememberMe) => {
   await dispatch(signingInAction());
 
-  await auth.setPersistence(auth.instance.Auth.Persistence[rememberMe ? 'LOCAL' : 'SESSION']);
-  const { user } = await auth.signInWithEmailAndPassword(email, password);
+  try {
+    await auth.setPersistence(auth.instance.Auth.Persistence[rememberMe ? 'LOCAL' : 'SESSION']);
+    const { user } = await auth.signInWithEmailAndPassword(email, password);
 
-  await updateAuthState(dispatch)(user);
-  await dispatch(signingInAction(false));
+    await updateAuthState(dispatch)(user);
+    await dispatch(signingInAction(false));
+  } catch (err) {
+    await dispatch(signingInAction(false));
+
+    throw err;
+  }
 };
 
 export const signUp = dispatch => async (name, email, password) => {
   await dispatch(signingInAction());
 
-  await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
-  const data = await auth.createUserWithEmailAndPassword(email, password);
-  if (data.additionalUserInfo.isNewUser) {
-    const { uid } = data.user;
+  try {
+    await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
+    const { additionalUserInfo, user } = await auth.createUserWithEmailAndPassword(email, password);
+    if (additionalUserInfo.isNewUser) {
+      const { uid } = user;
 
-    await request('POST', urls.signUp, { uid, email, name });
+      await request('POST', urls.signUp, { uid, email, name });
+    }
+
+    await updateAuthState(dispatch)(user);
+    await dispatch(signingInAction(false));
+  } catch (err) {
+    await dispatch(signingInAction(false));
+
+    throw err;
   }
+};
 
-  await updateAuthState(dispatch)(data.user);
-  await dispatch(signingInAction(false));
+export const signInWithGoogle = dispatch => async () => {
+  await dispatch(signingInAction());
+
+  try {
+    await auth.setPersistence(auth.instance.Auth.Persistence.LOCAL);
+    const provider = new auth.instance.GoogleAuthProvider();
+    const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
+    if (additionalUserInfo.isNewUser) {
+      const { email, name, picture: avatar } = additionalUserInfo.profile;
+      const { uid } = user;
+
+      await request('POST', urls.signUp, { uid, email, name, avatar });
+    }
+
+    await updateAuthState(dispatch)(user);
+    await dispatch(signingInAction(false));
+  } catch (err) {
+    await dispatch(signingInAction(false));
+
+    throw err;
+  }
 };

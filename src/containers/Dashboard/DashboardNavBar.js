@@ -52,7 +52,7 @@ class DashboardNavBar extends React.Component {
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </div>
               <div className="dropdown-divider" />
-              <span className="dropdown-item" onClick={this.handleSignOut}>
+              <span className="dropdown-item pointer" onClick={this.handleSignOut}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </span>
