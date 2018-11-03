@@ -40,7 +40,7 @@ class App extends React.Component {
                   render={() => (
                     <Suspense fallback={<LoadingPage />}>
                       <PrivateContext>
-                        <Suspense falllback={LoadingPage}>
+                        <Suspense falllback={<LoadingPage />}>
                           <DashboardPage />
                         </Suspense>
                       </PrivateContext>

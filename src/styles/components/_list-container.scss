@@ -1,0 +1,21 @@
+.list-container {
+  .list-title-row {
+    justify-content: space-between;
+
+    & > * {
+      margin-bottom: 0;
+    }
+
+    .title {
+      max-width: calc(100% - 30px);
+    }
+
+    .add-task-icon {
+      font-size: 1.25rem;
+
+      &:hover {
+        color: white !important;
+      }
+    }
+  }
+}
