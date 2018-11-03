@@ -6,7 +6,11 @@ class KanbanBoard extends React.Component {
   renderLists = () => {
     const { lists } = this.props;
 
-    return lists.map(({ uid, title, tasks }) => <ListContainer key={`list-${uid}`} title={title} tasks={tasks} />);
+    return lists.map(({ uid, title, tasks }) => (
+      <div key={`list-${uid}`} className="list-container-wrap col-sm-12 col-md-4 col-lg-3 mb-4">
+        <ListContainer uid={uid} title={title} tasks={tasks} />
+      </div>
+    ));
   };
 
   render() {
@@ -28,9 +32,7 @@ class KanbanBoard extends React.Component {
 
     return (
       <div className="kanban-board mt--7">
-        <div className="container-fluid">
-          <div className="row">{this.renderLists()}</div>
-        </div>
+        <div className="row lists-row mr-0">{this.renderLists()}</div>
       </div>
     );
   }
