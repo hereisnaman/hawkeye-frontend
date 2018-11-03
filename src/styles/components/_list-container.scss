@@ -18,4 +18,36 @@
       }
     }
   }
+  .task-container-row-wrap {
+    overflow-x: hidden;
+    .task-container-row {
+      max-height: calc(100vh - 420px);
+      padding-right: 20px;
+      width: calc(100% + 20px);
+      overflow-y: auto;
+      overflow-y: -moz-scrollbars-none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        width: 0px !important;
+        background: transparent !important; /* make scrollbar transparent */
+      }
+      -moz-appearance: menuimage;
+
+      .task-row {
+        &:last-child {
+          margin-bottom: 1.5rem !important;
+        }
+      }
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .list-container {
+    .task-container-row-wrap {
+      .task-container-row {
+        max-height: 70vh;
+      }
+    }
+  }
 }

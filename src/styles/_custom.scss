@@ -1,3 +1,8 @@
+html,
+body {
+  font-size: 16px !important;
+}
+
 .pointer {
   cursor: pointer;
   &.nav-link {
@@ -30,8 +35,16 @@
   text-overflow: ellipsis;
 }
 
+.badge.small {
+  font-size: 60%;
+}
+
 .badge-success {
   background-color: rgba(147, 231, 195, 1);
+}
+
+.badge-warning {
+  background-color: rgba(254, 201, 189, 1);
 }
 
 .flex-1 {
