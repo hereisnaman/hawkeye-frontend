@@ -1,12 +1,38 @@
 import React from 'react';
 
 class TaskContainer extends React.Component {
+  isDeadlineNear = deadline => {
+    if (deadline === null) {
+      return false;
+    }
+
+    const now = new Date();
+    const target = new Date(deadline);
+
+    return target - now <= 1 * 24 * 60 * 60 * 1000; // 1 day
+  };
+
+  renderTaskStats = () => {
+    const { deadline } = this.props;
+
+    if (this.isDeadlineNear(deadline)) {
+      return (
+        <span className="icon-stat">
+          <i className="fab fa-gripfire pointer text-danger mr-2" />
+        </span>
+      );
+    } else {
+      return <i className="far fa-snowflake pointer text-primary mr-2" />;
+    }
+  };
+
   render() {
     const { title, todos, deadline } = this.props;
 
     return (
       <div className="card task-card shadow pointer mb-0">
-        <div className="card-body">
+        <div className="card-body py-1">
+          <div className="task-status-row">{this.renderTaskStats()}</div>
           <div className="row task-title-row mx-0">
             <h4 className="title mb-0">{title}</h4>
           </div>
