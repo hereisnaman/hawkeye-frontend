@@ -31,13 +31,7 @@ class ListContainer extends React.Component {
             </span>
           </div>
           <div className="task-container-row-wrap">
-            <div className="task-container-row mx-0">
-              {this.renderTasks()}
-              {this.renderTasks()}
-              {this.renderTasks()}
-              {this.renderTasks()}
-              {this.renderTasks()}
-            </div>
+            <div className="task-container-row mx-0">{this.renderTasks()}</div>
           </div>
         </div>
       </div>
