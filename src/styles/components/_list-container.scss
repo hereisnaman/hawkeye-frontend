@@ -18,6 +18,20 @@
       }
     }
   }
+
+  .list-stat-row {
+    .icon-stat {
+      i {
+        font-size: 20px;
+        vertical-align: middle;
+
+        &.small {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
   .task-container-row-wrap {
     overflow-x: hidden;
     .task-container-row {
@@ -39,6 +53,11 @@
         }
       }
     }
+  }
+
+  .empty-card {
+    background-color: rgba(248, 249, 254, 0.05);
+    min-height: 125px;
   }
 }
 

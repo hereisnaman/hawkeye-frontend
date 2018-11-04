@@ -36,6 +36,7 @@ body {
 }
 
 .badge.small {
+  padding: 0.25rem 0.625rem !important;
   font-size: 60%;
 }
 
@@ -45,6 +46,10 @@ body {
 
 .badge-warning {
   background-color: rgba(254, 201, 189, 1);
+}
+
+.badge-primary {
+  background-color: rgba(203, 210, 246, 1);
 }
 
 .flex-1 {
@@ -57,4 +62,8 @@ body {
 
 .no-wrap {
   flex-wrap: nowrap;
+}
+
+i.small {
+  font-size: 14px;
 }
